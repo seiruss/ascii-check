@@ -235,8 +235,10 @@ int main(int argc, char *argv[])
 		scan(argv[1]);
 	}
 
-	printf("Press [Enter] to close\n");
-	getchar();
+	#if defined(WIN32)
+		printf("Press [Enter] to close\n");
+		getchar();
+	#endif
 
 	return EXIT_SUCCESS;
 }
