@@ -209,14 +209,15 @@ void scan(char *infile)
 	total = get_bad_chars(fp_in, fp_out, opt);
 	printf("\nFound %d non-ASCII character(s)\n", total);
 
+	fclose(fp_out); /* Close file pointer before remove */
+	fclose(fp_in);
+
 	if (total > 0)
 		printf("Results saved to %s\n\n", outfile);
 	else
 		remove(outfile);
 
 	free(outfile);
-	fclose(fp_out);
-	fclose(fp_in);
 }
 
 int main(int argc, char *argv[])
