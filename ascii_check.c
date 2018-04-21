@@ -235,7 +235,7 @@ int main(int argc, char *argv[])
 		scan(argv[1]);
 	}
 
-	#if defined(WIN32)
+	#if defined(WIN32) || defined(_WIN32)
 		printf("Press [Enter] to close\n");
 		getchar();
 	#endif
