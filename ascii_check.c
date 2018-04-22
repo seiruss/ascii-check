@@ -5,7 +5,7 @@
 #include <string.h>
 
 #define VER "1.0"
-#define MAX	1000
+#define MAX 1000
 
 typedef unsigned char BYTE;
 
@@ -161,7 +161,7 @@ int get_option()
 	return opt;
 }
 
-char *get_results_filename(char *name)
+char *get_outname(char *name)
 {
 	char *p = malloc(strlen(name) + strlen("_results.txt") + 1);
 
@@ -174,34 +174,32 @@ char *get_results_filename(char *name)
 	return p;
 }
 
-void scan(char *infile)
+int scan_file(char *infile)
 {
 	FILE *fp_in;
 	FILE *fp_out;
 	char *outfile;
 	int opt, total;
 
-	printf("This will check a file for non-ASCII characters\n\n");
-
 	if ((fp_in = fopen(infile, "r")) == NULL) {
 		printf("Error: Can not open %s\n", infile);
-		return;
+		return EXIT_FAILURE;
 	}
 
 	printf("File is %s\n\n", infile);
 
 	opt = get_option();
 
-	if ((outfile = get_results_filename(infile)) == NULL) {
+	if ((outfile = get_outname(infile)) == NULL) {
 		printf("\nError: Can not allocate memory to save results\n");
 		fclose(fp_in);
-		return;
+		return EXIT_FAILURE;
 	}
 
 	if ((fp_out = fopen(outfile, "w")) == NULL) {
 		printf("\nError: Can not open file to save results\n");
 		fclose(fp_in);
-		return;
+		return EXIT_FAILURE;
 	}
 
 	results_header(fp_out);
@@ -218,10 +216,13 @@ void scan(char *infile)
 		remove(outfile);
 
 	free(outfile);
+	return EXIT_SUCCESS;
 }
 
 int main(int argc, char *argv[])
 {
+	int rc = EXIT_SUCCESS;
+
 	if (argc != 2) {
 		printf("ASCII Check " VER "\n\n"
 		"Created by Russell Seifert\n"
@@ -232,7 +233,8 @@ int main(int argc, char *argv[])
 		"2) Drag the file on top of ascii_check\n\n");
 	}
 	else {
-		scan(argv[1]);
+		printf("This will check a file for non-ASCII characters\n\n");
+		rc = scan_file(argv[1]);
 	}
 
 	#if defined(WIN32) || defined(_WIN32)
@@ -240,5 +242,5 @@ int main(int argc, char *argv[])
 		getchar();
 	#endif
 
-	return EXIT_SUCCESS;
+	return rc;
 }
