@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -std=c99 -Wall -Werror -pedantic
-SRC = ascii_check.c
+SRC = $(wildcard src/*.c)
 TARGET = ascii_check.out
 
 .PHONY: all debug clean
