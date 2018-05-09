@@ -29,8 +29,10 @@ if [[ $($CPDIR/bin/cpprod_util FwIsFirewallMgmt) != *"1"* ]]; then
 	exit 1
 fi
 
-if [[ $($CPDIR/bin/cpprod_util CPPROD_GetValue CPshared VersionText 1) != "R80" ]]; then
-	$ECHO "\\nError: This server is not R80.x\\n"
+VERSION=$($CPDIR/bin/cpprod_util CPPROD_GetValue CPshared VersionText 1)
+if (( $($ECHO "${VERSION:1} < 80" | bc -l) )); then
+	$ECHO "\\nError: This server is on a version lower than R80.x"
+	$ECHO "Follow sk105708 for R77.30 and lower\\n"
 	exit 1
 fi
 
@@ -61,6 +63,6 @@ psql_client cpm postgres -t -o check_rules -c "select cma.name,dle.name,acc.name
 where not deleted and dlesession=0 and dle.objid = ent.owner and ent.entity = acc.objid and cma.objid = acc.domainid order by dle.name;"
 
 ./ascii_check -r check_rules
-if [[ $? == "0" ]]; then
+if [[ "$?" == "0" ]]; then
 	rm -rf check_rules
 fi
