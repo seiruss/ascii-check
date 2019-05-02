@@ -51,19 +51,7 @@ void results_header(FILE *fp)
 	fputs("ASCII Check Results\n", fp);
 	fputs("-------------------\n\n", fp);
 
-	fputs("The problem character(s) will be shown as a '.' "
+	fputs("The non-ASCII character(s) will be shown as a '.' "
 		"(period character).\nThese character(s) will be "
 		"shown in hexadecimal below the relevant line.\n\n", fp);
-
-	if (opt.type == RULES) {
-		fputs("------------------------------------------------"
-			"--------------------------------------------------"
-			"-----------------------------------\n", fp);
-		fputs("          DOMAIN NAME          |            "
-			"LAYER NAME            |            RULE NAME            "
-			"|            COMMENTS\n", fp);
-		fputs("------------------------------------------------"
-			"--------------------------------------------------"
-			"-----------------------------------\n\n", fp);
-	}
 }

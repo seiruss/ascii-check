@@ -17,18 +17,9 @@ static bool is_extended(int ch)
 	return (isprint(ch) || isspace(ch) || (ch >= 128 && ch <= 255));
 }
 
-static bool is_rules(int ch)
-{
-	return (is_standard(ch) || (BYTE) ch >= 160);
-}
-
 bool is_valid(int ch, int opt)
 {
 	switch (opt) {
-		case OBJECTS:
-			return is_standard(ch);
-		case RULES:
-			return is_rules(ch);
 		case STANDARD:
 			return is_standard(ch);
 		case EXTENDED:

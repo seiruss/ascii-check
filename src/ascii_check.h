@@ -7,6 +7,6 @@ struct {
 	int type;
 } opt;
 
-enum {OBJECTS = 1, RULES, STANDARD, EXTENDED};
+enum {STANDARD = 1, EXTENDED};
 
 #endif /* ASCII_CHECK_H */

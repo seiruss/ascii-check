@@ -19,10 +19,8 @@ static void usage(char *argv[])
 		"  -h, --help	    Display this help\n"
 		"  -v, --version	    version information\n\n"
 		"Scanning options:\n"
-		"  -o	Objects\n"
-		"  -r	Rules\n"
-		"  -s	Standard ASCII\n"
-		"  -e	Extended ASCII\n\n");
+		"  -s	Standard\n"
+		"  -e	Extended\n\n");
 }
 
 static void usage_short(char *argv[], char *msg)
@@ -34,7 +32,7 @@ static void usage_short(char *argv[], char *msg)
 
 static void version(char *argv[])
 {
-	printf("%s 1.1\n", argv[0]);
+	printf("%s 2.0\n", argv[0]);
 	printf("Written by Russell Seifert\n");
 	printf("Contribute at <https://github.com/seiruss/ascii-check>\n\n");
 }
@@ -49,18 +47,12 @@ static int parse_args(int argc, char *argv[])
 	if (argc == 2)
 		opt.type = STANDARD;
 
-	while ((c = getopt_long(argc, argv, "hveors",
+	while ((c = getopt_long(argc, argv, "hves",
 				long_options, &option_index)) != -1)
 	{
 		switch (c) {
 			case 'e':
 				opt.type = EXTENDED;
-				break;
-			case 'o':
-				opt.type = OBJECTS;
-				break;
-			case 'r':
-				opt.type = RULES;
 				break;
 			case 's':
 				opt.type = STANDARD;
